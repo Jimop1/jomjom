@@ -44,22 +44,22 @@ if not getgenv().settin then
 			['Webhook'] = "",
 		},
 		['ServerHopDelay'] = 15, -- minutes, resets every donation
-		['MinimumWithdrawAmount'] = 1000, -- fake withdraw amount
+		['MinimumWithdrawAmount'] = 1, -- fake withdraw amount
 		['Beg'] = {
 			['Delay'] = 120,
 			['Messages'] = {
-				'💸 WIN BOBUX HERE 💸',
-				'💸 EARN BY PLAYING 💸',
-				'💸 TIRED OF NO DONATIONS? PLAY OUR GAME 💸'
+				'pls donate me',
+				'I never got a donation',
+				'saving for 1000 robux'
 			}
 		}
 	}
 end
 
 local text = [[
-      💸 WIN BOBUX 💸
-    💸 GOLDEN CASINO 💸
-💸 type ".help" to get started 💸
+      💸 Donate me pls 💸
+    💸 Saving for 💸
+💸 1000 robux 💸
 ]]
 
 local plrs = {}
@@ -372,29 +372,29 @@ chat(settin.Beg.Messages[math.random(1,#settin.Beg.Messages)])
 local boothText = require(game.ReplicatedStorage.Remotes).Event("SetBoothText")
 task.spawn(function()
 	while true do
-		boothText:FireServer('<stroke color="#444444" thickness="1"><font size="9"><font color= "#FFB300"><font face="DenkOne">💸         Donate me!         💸 ------💸-Golden Casino-💸  💸          .help to play        💸</font></font></font></stroke>', "booth")
+		boothText:FireServer('<stroke color="#444444" thickness="1"><font size="9"><font color= "#FFB300"><font face="DenkOne">💸         Donate me!         💸 ------💸-Saving Robux-💸  💸          GOAL: 1000 robux        💸</font></font></font></stroke>', "booth")
 		task.wait(3)
-		boothText:FireServer('<stroke color="#444444" thickness="1"><font size="9"><font color= "#FFB300"><font face="DenkOne">💸         Donate me!         💸 -----💸-Golden Casino-💸-  💸          .help to play        💸</font></font></font></stroke>', "booth")
+		boothText:FireServer('<stroke color="#444444" thickness="1"><font size="9"><font color= "#FFB300"><font face="DenkOne">💸         Donate me!         💸 -----💸-Saving Robux-💸-  💸          GOAL: 1000 robux        💸</font></font></font></stroke>', "booth")
 		task.wait(3)
-		boothText:FireServer('<stroke color="#444444" thickness="1"><font size="9"><font color= "#FFB300"><font face="DenkOne">💸         Donate me!         💸 ----💸-Golden Casino-💸--  💸          .help to play        💸</font></font></font></stroke>', "booth")
+		boothText:FireServer('<stroke color="#444444" thickness="1"><font size="9"><font color= "#FFB300"><font face="DenkOne">💸         Donate me!         💸 ----💸-Saving Robux-💸--  💸          GOAL: 1000 robux        💸</font></font></font></stroke>', "booth")
 		task.wait(3)
-		boothText:FireServer('<stroke color="#444444" thickness="1"><font size="9"><font color= "#FFB300"><font face="DenkOne">💸         Donate me!         💸 ---💸-Golden Casino-💸---  💸          .help to play        💸</font></font></font></stroke>', "booth")
+		boothText:FireServer('<stroke color="#444444" thickness="1"><font size="9"><font color= "#FFB300"><font face="DenkOne">💸         Donate me!         💸 ---💸-Saving Robux-💸---  💸          GOAL: 1000 robux      💸</font></font></font></stroke>', "booth")
 		task.wait(3)
-		boothText:FireServer('<stroke color="#444444" thickness="1"><font size="9"><font color= "#FFB300"><font face="DenkOne">💸         Donate me!         💸 --💸-Golden Casino-💸----  💸          .help to play        💸</font></font></font></stroke>', "booth")
+		boothText:FireServer('<stroke color="#444444" thickness="1"><font size="9"><font color= "#FFB300"><font face="DenkOne">💸         Donate me!         💸 --💸-Saving Robux-💸----  💸          GOAL: 1000 robux        💸</font></font></font></stroke>', "booth")
 		task.wait(3)
-		boothText:FireServer('<stroke color="#444444" thickness="1"><font size="9"><font color= "#FFB300"><font face="DenkOne">💸         Donate me!         💸 -💸-Golden Casino-💸-----  💸          .help to play        💸</font></font></font></stroke>', "booth")
+		boothText:FireServer('<stroke color="#444444" thickness="1"><font size="9"><font color= "#FFB300"><font face="DenkOne">💸         Donate me!         💸 -💸-Saving Robux-💸-----  💸          GOAL: 1000 robux        💸</font></font></font></stroke>', "booth")
 		task.wait(3)
-		boothText:FireServer('<stroke color="#444444" thickness="1"><font size="9"><font color= "#FFB300"><font face="DenkOne">💸         Donate me!         💸 💸-Golden Casino-💸------  💸          .help to play        💸</font></font></font></stroke>', "booth")
+		boothText:FireServer('<stroke color="#444444" thickness="1"><font size="9"><font color= "#FFB300"><font face="DenkOne">💸         Donate me!         💸 💸-Saving Robux-💸------  💸          GOAL: 1000 robux        💸</font></font></font></stroke>', "booth")
 		task.wait(3)
-		boothText:FireServer('<stroke color="#444444" thickness="1"><font size="9"><font color= "#FFB300"><font face="DenkOne">💸         Donate me!         💸 -💸-Golden Casino-💸-----  💸          .help to play        💸</font></font></font></stroke>', "booth")
+		boothText:FireServer('<stroke color="#444444" thickness="1"><font size="9"><font color= "#FFB300"><font face="DenkOne">💸         Donate me!         💸 -💸-Saving Robux-💸-----  💸          GOAL: 1000 robux        💸</font></font></font></stroke>', "booth")
 		task.wait(3)
-		boothText:FireServer('<stroke color="#444444" thickness="1"><font size="9"><font color= "#FFB300"><font face="DenkOne">💸         Donate me!         💸 --💸-Golden Casino-💸----  💸          .help to play        💸</font></font></font></stroke>', "booth")
+		boothText:FireServer('<stroke color="#444444" thickness="1"><font size="9"><font color= "#FFB300"><font face="DenkOne">💸         Donate me!         💸 --💸-Saving Robux-💸----  💸          GOAL: 1000 robux        💸</font></font></font></stroke>', "booth")
 		task.wait(3)
-		boothText:FireServer('<stroke color="#444444" thickness="1"><font size="9"><font color= "#FFB300"><font face="DenkOne">💸         Donate me!         💸 ---💸-Golden Casino-💸---  💸          .help to play        💸</font></font></font></stroke>', "booth")
+		boothText:FireServer('<stroke color="#444444" thickness="1"><font size="9"><font color= "#FFB300"><font face="DenkOne">💸         Donate me!         💸 ---💸-Saving Robux-💸---  💸          GOAL: 1000 robux        💸</font></font></font></stroke>', "booth")
 		task.wait(3)
-		boothText:FireServer('<stroke color="#444444" thickness="1"><font size="9"><font color= "#FFB300"><font face="DenkOne">💸         Donate me!         💸 ----💸-Golden Casino-💸--  💸          .help to play        💸</font></font></font></stroke>', "booth")
+		boothText:FireServer('<stroke color="#444444" thickness="1"><font size="9"><font color= "#FFB300"><font face="DenkOne">💸         Donate me!         💸 ----💸-Saving Robux-💸--  💸          GOAL: 1000 robux        💸</font></font></font></stroke>', "booth")
 		task.wait(3)
-		boothText:FireServer('<stroke color="#444444" thickness="1"><font size="9"><font color= "#FFB300"><font face="DenkOne">💸         Donate me!         💸 -----💸-Golden-Casino-💸-  💸         .help to play        💸</font></font></font></stroke>', "booth")
+		boothText:FireServer('<stroke color="#444444" thickness="1"><font size="9"><font color= "#FFB300"><font face="DenkOne">💸         Donate me!         💸 -----💸-Saving Robux-💸-  💸          GOAL: 1000 robux        💸</font></font></font></stroke>', "booth")
 		task.wait(3)
 	end
 end)
