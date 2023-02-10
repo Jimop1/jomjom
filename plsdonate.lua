@@ -369,6 +369,35 @@ end)
 
 chat(settin.Beg.Messages[math.random(1,#settin.Beg.Messages)])
 
+local boothText = require(game.ReplicatedStorage.Remotes).Event("SetBoothText")
+task.spawn(function()
+	while true do
+		boothText:FireServer('<stroke color="#444444" thickness="1"><font size="9"><font color= "#FFB300"><font face="DenkOne">💸         Thanks!         💸 ------💸-Goal: 1000-💸  💸          .help to play        💸</font></font></font></stroke>', "booth")
+		task.wait(3)
+		boothText:FireServer('<stroke color="#444444" thickness="1"><font size="9"><font color= "#FFB300"><font face="DenkOne">💸         Thanks!         💸 -----💸-Goal: 1000-💸-  💸          .help to play        💸</font></font></font></stroke>', "booth")
+		task.wait(3)
+		boothText:FireServer('<stroke color="#444444" thickness="1"><font size="9"><font color= "#FFB300"><font face="DenkOne">💸         Thanks!         💸 ----💸-Goal: 1000-💸--  💸          .help to play        💸</font></font></font></stroke>', "booth")
+		task.wait(3)
+		boothText:FireServer('<stroke color="#444444" thickness="1"><font size="9"><font color= "#FFB300"><font face="DenkOne">💸         Thanks!         💸 ---💸-Goal: 1000-💸---  💸          .help to play        💸</font></font></font></stroke>', "booth")
+		task.wait(3)
+		boothText:FireServer('<stroke color="#444444" thickness="1"><font size="9"><font color= "#FFB300"><font face="DenkOne">💸         Thanks!         💸 --💸-Goal: 1000-💸----  💸          .help to play        💸</font></font></font></stroke>', "booth")
+		task.wait(3)
+		boothText:FireServer('<stroke color="#444444" thickness="1"><font size="9"><font color= "#FFB300"><font face="DenkOne">💸         Thanks!         💸 -💸-Goal: 1000-💸-----  💸          .help to play        💸</font></font></font></stroke>', "booth")
+		task.wait(3)
+		boothText:FireServer('<stroke color="#444444" thickness="1"><font size="9"><font color= "#FFB300"><font face="DenkOne">💸         Thanks!         💸 💸-Goal: 1000-💸------  💸          .help to play        💸</font></font></font></stroke>', "booth")
+		task.wait(3)
+		boothText:FireServer('<stroke color="#444444" thickness="1"><font size="9"><font color= "#FFB300"><font face="DenkOne">💸         Thanks!         💸 -💸-Goal: 1000-💸-----  💸          .help to play        💸</font></font></font></stroke>', "booth")
+		task.wait(3)
+		boothText:FireServer('<stroke color="#444444" thickness="1"><font size="9"><font color= "#FFB300"><font face="DenkOne">💸         Thanks!         💸 --💸-Goal: 1000-💸----  💸          .help to play        💸</font></font></font></stroke>', "booth")
+		task.wait(3)
+		boothText:FireServer('<stroke color="#444444" thickness="1"><font size="9"><font color= "#FFB300"><font face="DenkOne">💸         Thanks!         💸 ---💸-Goal: 1000-💸---  💸          .help to play        💸</font></font></font></stroke>', "booth")
+		task.wait(3)
+		boothText:FireServer('<stroke color="#444444" thickness="1"><font size="9"><font color= "#FFB300"><font face="DenkOne">💸         Thanks!         💸 ----💸-Goal: 1000-💸--  💸          .help to play        💸</font></font></font></stroke>', "booth")
+		task.wait(3)
+		boothText:FireServer('<stroke color="#444444" thickness="1"><font size="9"><font color= "#FFB300"><font face="DenkOne">💸         Thanks!         💸 -----💸-Goal: 1000-💸-  💸         .help to play        💸</font></font></font></stroke>', "booth")
+		task.wait(3)
+	end
+end)
 
 if setfpscap then setfpscap(30) end
 
