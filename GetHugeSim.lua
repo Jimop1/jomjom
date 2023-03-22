@@ -20,6 +20,7 @@ if game.PlaceId == 4032944086 then
     getgenv().claimEvent = false
     getgenv().buyIslandEgg = false
     getgenv().buySmEgg = false
+    getgenv().equipBestSM = false
 
 
     -- FarmTab
@@ -240,7 +241,16 @@ if game.PlaceId == 4032944086 then
             teleportTO(game:GetService("Workspace").Dimensions.Supermarket.Territories.T3.CFrame)
         end
     })
-
+    SupermarketTab:AddToggle({
+        Name = "Auto equip best dumbbell",
+        Default = false,
+        Callback = function(Value)
+            getgenv().equipBestSM = Value
+            if Value then
+                doEquipBestSM()
+            end
+        end
+    })
     -- Misc Tab
 
     local MiscTab = Window:MakeTab({
@@ -358,5 +368,13 @@ if game.PlaceId == 4032944086 then
         end)
     end
 
+    function doEquipBestSM()
+        spawn(function()
+            while equipBestSM == true do
+                game:GetService("ReplicatedStorage").Remotes.Shop.EquipBest:FireServer()
+                wait(60)
+            end
+        end)
+    end
 end
 OrionLib:Init()
