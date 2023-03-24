@@ -21,6 +21,8 @@ if game.PlaceId == 4032944086 then
     getgenv().buyIslandEgg = false
     getgenv().buySmEgg = false
     getgenv().equipBestSM = false
+    getgenv().doCollectSh = false
+    getgenv().doCollectGe = false
 
 
     -- FarmTab
@@ -269,6 +271,26 @@ if game.PlaceId == 4032944086 then
             end
         end
     })
+    MiscTab:AddToggle({
+        Name = "Collect Shamrocks",
+        Default = false,
+        Callback = function(Value)
+            getgenv().doCollectSh = Value
+            if Value then
+                doCollect()
+            end
+        end
+    })
+    MiscTab:AddToggle({
+        Name = "Collect Gems",
+        Default = false,
+        Callback = function(Value)
+            getgenv().doCollectGe = Value
+            if Value then
+                doCollectGems()
+            end
+        end
+    })
 
 
     -- Functions
@@ -376,5 +398,32 @@ if game.PlaceId == 4032944086 then
             end
         end)
     end
+    function doCollect()
+        spawn(function()
+            while doCollectSh == true do
+                for _, part in game:GetService("Workspace").ConsumableSpawns:GetDescendants() do
+                    if part.Name == "ShamrocksModel" then
+                        teleportTO(part.CFrame)
+                        wait(1)
+                    end
+                end
+                wait(1)
+            end
+        end)
+    end
+    function doCollectGems()
+        spawn(function()
+            while doCollectGe == true do
+                for _, part in game:GetService("Workspace").ConsumableSpawns:GetDescendants() do
+                    if part.Name == "GemModel" then
+                        teleportTO(part.CFrame)
+                        wait(1)
+                    end
+                end
+                wait(1)
+            end
+        end)
+    end
 end
+
 OrionLib:Init()
