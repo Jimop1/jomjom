@@ -23,6 +23,7 @@ if game.PlaceId == 4032944086 then
     getgenv().equipBestSM = false
     getgenv().doCollectSh = false
     getgenv().doCollectGe = false
+    getgenv().doAutoAfk = false
 
 
     -- FarmTab
@@ -110,6 +111,7 @@ if game.PlaceId == 4032944086 then
         Icon = "rbxassetid://4483345998",
         PremiumOnly = false
     })
+    PetTab:AddParagraph("Important note!", "If you toggle auto buy and select an egg it will buy the egg until you run out of gems or inventory space")
     local eggName;
     local eggName2;
     local eggNumber;
@@ -260,7 +262,28 @@ if game.PlaceId == 4032944086 then
         Icon = "rbxassetid://4483345998",
         PremiumOnly = false
     })
-
+    MiscTab:AddParagraph("Important!", "Collect Gems and Shamrocks will tp you to the model.")
+    MiscTab:AddToggle({
+        Name = "Collect Gems",
+        Default = false,
+        Callback = function(Value)
+            getgenv().doCollectGe = Value
+            if Value then
+                doCollectGems()
+            end
+        end
+    })
+    MiscTab:AddToggle({
+        Name = "Toggle Afk",
+        Default = false,
+        Callback = function(Value)
+            getgenv().doAutoAfk = Value
+            if Value then
+                doAFK()
+            end
+        end
+    })
+    MiscTab:AddParagraph("Temporary toggles", "The following toggles will only be there during the event.")
     MiscTab:AddToggle({
         Name = "Claim event reward",
         Default = false,
@@ -278,16 +301,6 @@ if game.PlaceId == 4032944086 then
             getgenv().doCollectSh = Value
             if Value then
                 doCollect()
-            end
-        end
-    })
-    MiscTab:AddToggle({
-        Name = "Collect Gems",
-        Default = false,
-        Callback = function(Value)
-            getgenv().doCollectGe = Value
-            if Value then
-                doCollectGems()
             end
         end
     })
@@ -404,10 +417,10 @@ if game.PlaceId == 4032944086 then
                 for _, part in game:GetService("Workspace").ConsumableSpawns:GetDescendants() do
                     if part.Name == "ShamrocksModel" then
                         teleportTO(part.CFrame)
-                        wait(2.5)
+                        wait(1)
                     end
                 end
-                wait()
+                wait(1)
             end
         end)
     end
@@ -417,10 +430,26 @@ if game.PlaceId == 4032944086 then
                 for _, part in game:GetService("Workspace").ConsumableSpawns:GetDescendants() do
                     if part.Name == "GemModel" then
                         teleportTO(part.CFrame)
-                        wait(3)
+                        wait(1)
                     end
                 end
                 wait(1)
+            end
+        end)
+    end
+    function doAFK()
+        spawn(function()
+            while doAutoAfk == true do
+                wait(0.5)
+                local bb = game:service "VirtualUser"
+                game:service "Players".LocalPlayer.Idled:connect(
+                function()
+                    bb:CaptureController()
+                    bb:ClickButton2(Vector2.new())
+                    wait(2)
+                end
+                )
+                wait(2)
             end
         end)
     end
