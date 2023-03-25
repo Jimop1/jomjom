@@ -404,10 +404,10 @@ if game.PlaceId == 4032944086 then
                 for _, part in game:GetService("Workspace").ConsumableSpawns:GetDescendants() do
                     if part.Name == "ShamrocksModel" then
                         teleportTO(part.CFrame)
-                        wait(1)
+                        wait(2.5)
                     end
                 end
-                wait(1)
+                wait()
             end
         end)
     end
@@ -417,7 +417,7 @@ if game.PlaceId == 4032944086 then
                 for _, part in game:GetService("Workspace").ConsumableSpawns:GetDescendants() do
                     if part.Name == "GemModel" then
                         teleportTO(part.CFrame)
-                        wait(1)
+                        wait(3)
                     end
                 end
                 wait(1)
