@@ -21,8 +21,8 @@ if game.PlaceId == 4032944086 then
     getgenv().buyIslandEgg = false
     getgenv().buySmEgg = false
     getgenv().equipBestSM = false
-    getgenv().doCollectSh = false
-    getgenv().doCollectGe = false
+    getgenv().doCollectShamrocks = false
+    getgenv().doCollectGems = false
     getgenv().doAutoAfk = false
 
 
@@ -111,7 +111,8 @@ if game.PlaceId == 4032944086 then
         Icon = "rbxassetid://4483345998",
         PremiumOnly = false
     })
-    PetTab:AddParagraph("Important note!", "If you toggle auto buy and select an egg it will buy the egg until you run out of gems or inventory space")
+    PetTab:AddParagraph("Important note!",
+        "If you toggle auto buy and select an egg it will buy the egg until you run out of gems or inventory space")
     local eggName;
     local eggName2;
     local eggNumber;
@@ -190,6 +191,18 @@ if game.PlaceId == 4032944086 then
         end
     })
     IslandTeleportTab:AddButton({
+        Name = "Leaderboard area",
+        Callback = function()
+            teleportTO(game:GetService("Workspace").RingAreas.RangeSystem.Server.TopSafeArea.CFrame)
+        end
+    })
+    IslandTeleportTab:AddButton({
+        Name = "Spawn",
+        Callback = function()
+            teleportTO(game:GetService('Workspace').Islands.Spawns.SpawnLocation.CFrame)
+        end
+    })
+    IslandTeleportTab:AddButton({
         Name = "Territory 1",
         Callback = function()
             teleportTO(game:GetService("Workspace").RingAreas.Territories.T1.CFrame)
@@ -262,12 +275,11 @@ if game.PlaceId == 4032944086 then
         Icon = "rbxassetid://4483345998",
         PremiumOnly = false
     })
-    MiscTab:AddParagraph("Important!", "Collect Gems and Shamrocks will tp you to the model.")
     MiscTab:AddToggle({
         Name = "Collect Gems",
         Default = false,
         Callback = function(Value)
-            getgenv().doCollectGe = Value
+            getgenv().doCollectGems = Value
             if Value then
                 doCollectGems()
             end
@@ -298,13 +310,12 @@ if game.PlaceId == 4032944086 then
         Name = "Collect Shamrocks",
         Default = false,
         Callback = function(Value)
-            getgenv().doCollectSh = Value
+            getgenv().doCollectShamrocks = Value
             if Value then
                 doCollect()
             end
         end
     })
-
 
     -- Functions
 
@@ -411,43 +422,48 @@ if game.PlaceId == 4032944086 then
             end
         end)
     end
+
     function doCollect()
         spawn(function()
-            while doCollectSh == true do
+            while doCollectShamrocks == true do
+                local playr = game.Players.LocalPlayer
+                wait(41)
                 for _, part in game:GetService("Workspace").ConsumableSpawns:GetDescendants() do
                     if part.Name == "ShamrocksModel" then
-                        teleportTO(part.CFrame)
-                        wait(1)
+                        part.CFrame = playr.Character.Humanoid.RootPart.CFrame
+                        wait()
                     end
                 end
-                wait(1)
             end
         end)
     end
+
     function doCollectGems()
         spawn(function()
-            while doCollectGe == true do
+            while doCollectGems == true do
+                local playr = game.Players.LocalPlayer
+                wait(41)
                 for _, part in game:GetService("Workspace").ConsumableSpawns:GetDescendants() do
                     if part.Name == "GemModel" then
-                        teleportTO(part.CFrame)
-                        wait(1)
+                        part.CFrame = playr.Character.Humanoid.RootPart.CFrame
+                        wait()
                     end
                 end
-                wait(1)
             end
         end)
     end
+
     function doAFK()
         spawn(function()
             while doAutoAfk == true do
                 wait(0.5)
                 local bb = game:service "VirtualUser"
                 game:service "Players".LocalPlayer.Idled:connect(
-                function()
-                    bb:CaptureController()
-                    bb:ClickButton2(Vector2.new())
-                    wait(2)
-                end
+                    function()
+                        bb:CaptureController()
+                        bb:ClickButton2(Vector2.new())
+                        wait(2)
+                    end
                 )
                 wait(2)
             end
