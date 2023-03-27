@@ -22,7 +22,7 @@ if game.PlaceId == 4032944086 then
     getgenv().buySmEgg = false
     getgenv().equipBestSM = false
     getgenv().doCollectShamrocks = false
-    getgenv().doCollectGems = false
+    getgenv().CollectGems = false
     getgenv().doAutoAfk = false
 
 
@@ -279,7 +279,7 @@ if game.PlaceId == 4032944086 then
         Name = "Collect Gems",
         Default = false,
         Callback = function(Value)
-            getgenv().doCollectGems = Value
+            getgenv().CollectGems = Value
             if Value then
                 doCollectGems()
             end
@@ -440,7 +440,7 @@ if game.PlaceId == 4032944086 then
 
     function doCollectGems()
         spawn(function()
-            while doCollectGems == true do
+            while CollectGems == true do
                 local playr = game.Players.LocalPlayer
                 wait(41)
                 for _, part in game:GetService("Workspace").ConsumableSpawns:GetDescendants() do
