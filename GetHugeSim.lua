@@ -17,14 +17,13 @@ if game.PlaceId == 4032944086 then
     getgenv().autoSellSM = false
     getgenv().autoBuy = false
     getgenv().autoBuySM = false
-    getgenv().claimEvent = false
     getgenv().buyIslandEgg = false
     getgenv().buySmEgg = false
     getgenv().equipBestSM = false
-    getgenv().doCollectShamrocks = false
     getgenv().CollectGems = false
     getgenv().doAutoAfk = false
-
+    getgenv().autoBoss = false
+    getgenv().autoGain = false
 
     -- FarmTab
 
@@ -295,28 +294,66 @@ if game.PlaceId == 4032944086 then
             end
         end
     })
-    MiscTab:AddParagraph("Temporary toggles", "The following toggles will only be there during the event.")
-    MiscTab:AddToggle({
-        Name = "Claim event reward",
+    -- Event World
+    local EventTab = Window:MakeTab({
+        Name = "Event",
+        Icon = "rbxassetid://4483345998",
+        PremiumOnly = false
+    })
+    EventTab:AddToggle({
+        Name = "Auto Gain",
         Default = false,
         Callback = function(Value)
-            getgenv().claimEvent = Value
+            getgenv().autoGain = Value
             if Value then
-                doClaimEvent()
+                doGain()
             end
         end
     })
-    MiscTab:AddToggle({
-        Name = "Collect Shamrocks",
+    EventTab:AddToggle({
+        Name = "Auto hit",
         Default = false,
         Callback = function(Value)
-            getgenv().doCollectShamrocks = Value
+            getgenv().autoHit = Value
             if Value then
-                doCollect()
+                doHit()
             end
         end
     })
-
+    EventTab:AddToggle({
+        Name = "Auto Boss",
+        Default = false,
+        Callback = function(Value)
+            getgenv().autoBoss = Value
+            if Value then
+                doBoss()
+            end
+        end
+    })
+    EventTab:AddButton({
+        Name = "Zone 1",
+        Callback = function()
+            teleportTO(game:GetService("Workspace").Dimensions.EasterWorld.Lifting_Land.PlacementAreas.Zone1.CFrame)
+        end
+    })
+    EventTab:AddButton({
+        Name = "Zone 2",
+        Callback = function()
+            teleportTO(game:GetService("Workspace").Dimensions.EasterWorld.Lifting_Land.PlacementAreas.Zone2.CFrame)
+        end
+    })
+    EventTab:AddButton({
+        Name = "Zone 3",
+        Callback = function()
+            teleportTO(game:GetService("Workspace").Dimensions.EasterWorld.Lifting_Land.PlacementAreas.Zone3.CFrame)
+        end
+    })
+    EventTab:AddButton({
+        Name = "Zone 4",
+        Callback = function()
+            teleportTO(game:GetService("Workspace").Dimensions.EasterWorld.Lifting_Land.PlacementAreas.Zone4.CFrame)
+        end
+    })
     -- Functions
 
     function doLift()
@@ -405,15 +442,6 @@ if game.PlaceId == 4032944086 then
         end)
     end
 
-    function doClaimEvent()
-        spawn(function()
-            while claimEvent == true do
-                game:GetService("ReplicatedStorage").Remotes.Timers.GetEventReward:InvokeServer()
-                wait(60)
-            end
-        end)
-    end
-
     function doEquipBestSM()
         spawn(function()
             while equipBestSM == true do
@@ -423,20 +451,6 @@ if game.PlaceId == 4032944086 then
         end)
     end
 
-    function doCollect()
-        spawn(function()
-            while doCollectShamrocks == true do
-                local playr = game.Players.LocalPlayer
-                wait(41)
-                for _, part in game:GetService("Workspace").ConsumableSpawns:GetDescendants() do
-                    if part.Name == "ShamrocksModel" then
-                        part.CFrame = playr.Character.Humanoid.RootPart.CFrame
-                        wait()
-                    end
-                end
-            end
-        end)
-    end
 
     function doCollectGems()
         spawn(function()
@@ -466,6 +480,23 @@ if game.PlaceId == 4032944086 then
                     end
                 )
                 wait(2)
+            end
+        end)
+    end
+
+    function doBoss()
+        spawn(function()
+            while autoBoss == true do
+                teleportTO(game:GetService("Workspace").BossModels.EasterWarrior.RightFoot.CFrame)
+                wait(1)
+            end
+        end)
+    end
+    function doGain()
+        spawn(function()
+            while autoGain == true do
+                game:GetService("ReplicatedStorage").Remotes.Machines.AttemptMachineTraining:InvokeServer()
+                wait()
             end
         end)
     end
