@@ -23,6 +23,7 @@ getgenv().CollectGems = false
 getgenv().doAutoAfk = false
 getgenv().autoBoss = false
 getgenv().autoGain = false
+getgenv().autoClaim = false
 
 
 -- InfoTab
@@ -31,8 +32,8 @@ local InfoTab = Window:MakeTab({
     Icon = "rbxassetid://4483345998",
     PremiumOnly = false
 })
-InfoTab:AddParagraph("Updated", "Last updated 10.4.2023")
-InfoTab:AddParagraph("Changelogs", "Added Easter Event tab and removed Leprechaun event tab")
+InfoTab:Label("Last updated 12.4.2023")
+InfoTab:AddParagraph("Changelogs", "+ Easter Event tab \nRemoved Leprechaun event tab \n=>Small fixes and changes")
 
 -- IslandTab
 
@@ -289,7 +290,16 @@ local EventTab = Window:MakeTab({
     PremiumOnly = false
 })
 EventTab:AddParagraph("Note", "This tab will be updated/deleted if the event changes")
-
+EventTab:AddToggle({
+    Name = "Auto claim event",
+    Default = false,
+    Callback = function(Value)
+        getgenv().autoClaim = Value
+        if Value then
+            doClaim()
+        end
+    end
+})
 EventTab:AddToggle({
     Name = "Auto Gain",
     Default = false,
@@ -486,6 +496,14 @@ function doGain()
         while autoGain == true do
             game:GetService("ReplicatedStorage").Remotes.Machines.AttemptMachineTraining:InvokeServer()
             wait()
+        end
+    end)
+end
+function doClaim()
+    spawn(function()
+        while autoClaim == true do
+            game:GetService("ReplicatedStorage").Remotes.Timers.GetEventReward:InvokeServer()
+            wait(60)
         end
     end)
 end
