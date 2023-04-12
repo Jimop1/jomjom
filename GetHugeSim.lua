@@ -32,7 +32,7 @@ local InfoTab = Window:MakeTab({
     Icon = "rbxassetid://4483345998",
     PremiumOnly = false
 })
-InfoTab:AddParagraph("Updated",Last updated 12.4.2023")
+InfoTab:AddParagraph("Updated","Last updated 12.4.2023")
 InfoTab:AddParagraph("Changelogs", "+ Easter Event tab \nRemoved Leprechaun event tab \n=>Small fixes and changes")
 
 -- IslandTab
