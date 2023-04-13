@@ -3,11 +3,11 @@ local Window = OrionLib:MakeWindow({
     Name = "Get Huge Simulator",
     HidePremium = false,
     IntroEnabled = false,
-    SaveConfig = true,
+    SaveConfig = false,
     ConfigFolder = "GetHugeSimConfig"
 })
 
--- Variablen
+-- Variables
 
 getgenv().autoLift = false
 getgenv().autoHit = false
@@ -46,8 +46,6 @@ IslandTab:AddParagraph("Island functions", "Adding more soon")
 IslandTab:AddToggle({
     Name = "Auto lift",
     Default = false,
-    Save = true,
-    Flag = "LiftToggle",
     Callback = function(Value)
         getgenv().autoLift = Value
         if Value then
@@ -278,8 +276,6 @@ MiscTab:AddToggle({
 MiscTab:AddToggle({
     Name = "Toggle Afk",
     Default = false,
-    Save = true,
-    Flag = "AfkToggle",
     Callback = function(Value)
         getgenv().doAutoAfk = Value
         if Value then
@@ -297,8 +293,6 @@ EventTab:AddParagraph("Note", "This tab will be updated/deleted if the event cha
 EventTab:AddToggle({
     Name = "Auto claim event",
     Default = false,
-    Save = true,
-    Flag = "ClaimToggle",
     Callback = function(Value)
         getgenv().autoClaim = Value
         if Value then
@@ -309,8 +303,6 @@ EventTab:AddToggle({
 EventTab:AddToggle({
     Name = "Auto Gain",
     Default = false,
-    Save = true,
-    Flag = "GainToggle",
     Callback = function(Value)
         getgenv().autoGain = Value
         if Value then
