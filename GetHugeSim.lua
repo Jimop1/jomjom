@@ -3,11 +3,11 @@ local Window = OrionLib:MakeWindow({
     Name = "Get Huge Simulator",
     HidePremium = false,
     IntroEnabled = false,
-    SaveConfig = false,
+    SaveConfig = true,
     ConfigFolder = "GetHugeSimConfig"
 })
 
--- Variables
+-- Variablen
 
 getgenv().autoLift = false
 getgenv().autoHit = false
@@ -24,6 +24,7 @@ getgenv().doAutoAfk = false
 getgenv().autoBoss = false
 getgenv().autoGain = false
 getgenv().autoClaim = false
+getgenv().autoLog = false
 
 
 -- InfoTab
@@ -32,8 +33,9 @@ local InfoTab = Window:MakeTab({
     Icon = "rbxassetid://4483345998",
     PremiumOnly = false
 })
-InfoTab:AddLabel("Last updated 12.4.2023")
-InfoTab:AddParagraph("Changelogs", "+ Easter Event tab \n- Removed Leprechaun event tab \n=> Small fixes and changes")
+InfoTab:AddLabel("Last updated 25.4.2023")
+InfoTab:AddParagraph("Changelogs", "- Easter Event tab")
+
 
 -- IslandTab
 
@@ -46,6 +48,8 @@ IslandTab:AddParagraph("Island functions", "Adding more soon")
 IslandTab:AddToggle({
     Name = "Auto lift",
     Default = false,
+    Save = true,
+    Flag = "LiftToggle",
     Callback = function(Value)
         getgenv().autoLift = Value
         if Value then
@@ -276,6 +280,8 @@ MiscTab:AddToggle({
 MiscTab:AddToggle({
     Name = "Toggle Afk",
     Default = false,
+    Save = true,
+    Flag = "AfkToggle",
     Callback = function(Value)
         getgenv().doAutoAfk = Value
         if Value then
@@ -283,73 +289,26 @@ MiscTab:AddToggle({
         end
     end
 })
--- Event World
-local EventTab = Window:MakeTab({
-    Name = "Event",
-    Icon = "rbxassetid://4483345998",
-    PremiumOnly = false
+MiscTab:AddButton({
+    Name = "Rejoin",
+    Callback = function(Value)
+        doRejoin()
+    end
 })
-EventTab:AddParagraph("Note", "This tab will be updated/deleted if the event changes")
-EventTab:AddToggle({
-    Name = "Auto claim event",
+MiscTab:AddButton({
+    Name = "Log",
+    Callback = function(Value)
+        webhook()
+    end
+})
+MiscTab:AddToggle({
+    Name = "Autolog",
     Default = false,
     Callback = function(Value)
-        getgenv().autoClaim = Value
+        getgenv().autoLog = Value
         if Value then
-            doClaim()
-        end
-    end
-})
-EventTab:AddToggle({
-    Name = "Auto Gain",
-    Default = false,
-    Callback = function(Value)
-        getgenv().autoGain = Value
-        if Value then
-            doGain()
-        end
-    end
-})
-EventTab:AddToggle({
-    Name = "Auto hit",
-    Default = false,
-    Callback = function(Value)
-        getgenv().autoHit = Value
-        if Value then
-            doHit()
-        end
-    end
-})
-EventTab:AddToggle({
-    Name = "Auto Boss",
-    Default = false,
-    Callback = function(Value)
-        getgenv().autoBoss = Value
-        if Value then
-            doBoss()
-        end
-    end
-})
-local entscheidung
-EventTab:AddDropdown({
-    Name = "Easter Zones",
-    Default = "1",
-    Options = { "Zone1", "Zone2", "Zone3", "Zone4" },
-    Callback = function(Value)
-        entscheidung = Value
-    end
-})
-EventTab:AddButton({
-    Name = "Teleport",
-    Callback = function(Value)
-        if entscheidung == "Zone1" then
-            teleportTO(game:GetService("Workspace").Dimensions.EasterWorld.Lifting_Land.PlacementAreas.Zone1.CFrame)
-        elseif entscheidung == "Zone2" then
-            teleportTO(game:GetService("Workspace").Dimensions.EasterWorld.Lifting_Land.PlacementAreas.Zone2.CFrame)
-        elseif entscheidung == "Zone3" then
-            teleportTO(game:GetService("Workspace").Dimensions.EasterWorld.Lifting_Land.PlacementAreas.Zone3.CFrame)
-        elseif entscheidung == "Zone4" then
-            teleportTO(game:GetService("Workspace").Dimensions.EasterWorld.Lifting_Land.PlacementAreas.Zone4.CFrame)
+            webhook()
+			wait(60)
         end
     end
 })
@@ -482,30 +441,107 @@ function doAFK()
     end)
 end
 
-function doBoss()
+function doRejoin()
     spawn(function()
-        while autoBoss == true do
-            teleportTO(game:GetService("Workspace").BossModels.EasterWarrior.RightFoot.CFrame)
-            wait(1)
-        end
+        local TeleportService = game:GetService("TeleportService")
+        local Players = game:GetService("Players")
+        local LocalPlayer = Players.LocalPlayer
+
+        local Rejoin = coroutine.create(function()
+            local Success, ErrorMessage = pcall(function()
+                TeleportService:Teleport(game.PlaceId, LocalPlayer)
+            end)
+
+            if ErrorMessage and not Success then
+                warn(ErrorMessage)
+            end
+        end)
+
+        coroutine.resume(Rejoin)
+        wait()
     end)
 end
 
-function doGain()
-    spawn(function()
-        while autoGain == true do
-            game:GetService("ReplicatedStorage").Remotes.Machines.AttemptMachineTraining:InvokeServer()
-            wait()
-        end
-    end)
+function formatTime(seconds)
+    local days = math.floor(seconds / 86400)
+    seconds = seconds - (days * 86400)
+    local hours = math.floor(seconds / 3600)
+    seconds = seconds - (hours * 3600)
+    local minutes = math.floor(seconds / 60)
+    seconds = seconds - (minutes * 60)
+    local timeString = string.format("%d days, %02d hours, %02d minutes, %02d seconds", days, hours, minutes, seconds)
+    return timeString
 end
-function doClaim()
-    spawn(function()
-        while autoClaim == true do
-            game:GetService("ReplicatedStorage").Remotes.Timers.GetEventReward:InvokeServer()
-            wait(60)
-        end
-    end)
+
+function webhook()
+    while autoLog == true do
+        local httpService = game:GetService('HttpService')
+        local httpRequest = (syn and syn.request) or http and http.request or http_request or (fluxus and fluxus.request) or
+            request
+
+        local player = game.Players.LocalPlayer
+        local gems = player.PlayerData.Gems.Value
+        local killStreak = player.leaderstats.KillStreak.Value
+        local body = player.leaderstats.Body.Value
+        local reputation = player.PlayerData.PVP.Reputation.Value
+        local totalKills = player.PlayerData.PVP.TotalKills.Value
+        local playTime = formatTime(game:GetService("Players").LocalPlayer.PlayerData.Analytics.TotalTimePlayed.Value)
+
+        local embed1 = {
+            ["title"] = "Get Huge Simulator",
+            ["description"] = player.Name .. "'s Stats",
+            ["color"] = 65280,
+            ["thumbnail"] = {
+                ["url"] = "https://i.imgur.com/Q4Wyg4v.png"
+            },
+            ["fields"] = {
+                {
+                    ["name"] = "Body",
+                    ["value"] = body,
+                    ["inline"] = true
+                },
+                {
+                    ["name"] = "Gems",
+                    ["value"] = gems,
+                    ["inline"] = false
+                },
+                {
+                    ["name"] = "Killstreak",
+                    ["value"] = killStreak,
+                    ["inline"] = false
+                },
+                {
+                    ["name"] = "Reputation",
+                    ["value"] = reputation,
+                    ["inline"] = false
+                },
+                {
+                    ["name"] = "Time played",
+                    ["value"] = playTime,
+                    ["inline"] = false
+                },
+                {
+                    ["name"] = "Total kills",
+                    ["value"] = totalKills,
+                    ["inline"] = false
+                }
+            }
+        }
+        local currentTime = os.date("%c")
+        local success, response = pcall(httpRequest, {
+            Url =
+            "https://discord.com/api/webhooks/1095634339091468379/iGWsUSl8ykL0sndHsDcSI1bAu0eOZIZWa2Ts1YqafYDDRPD3CrYIjYzJx0F3p5-EHgUd",
+            Method = "POST",
+            Headers = {
+                ["Content-Type"] = "application/json"
+            },
+            Body = httpService:JSONEncode({
+                content = currentTime,
+                embeds = { embed1 }
+            })
+        })
+        wait(60)
+    end
 end
 
 OrionLib:Init()
