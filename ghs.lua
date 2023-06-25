@@ -60,6 +60,98 @@ function doLift()
     end)
 end
 
+-- toggle collect 
+getgenv().autoMoney = false
+local MoneyInterval
+
+local Toggle = MainTab:CreateToggle({
+    Name = "Toggle Auto Money",
+    CurrentValue = false,
+    Flag = "AutoMoney",
+    Callback = function(Value)
+        getgenv().autoMoney = Value
+        if Value then
+            doMoney()
+        end
+    end
+})
+
+local Slider = MainTab:CreateSlider({
+    Name = "Auto Money Interval",
+    Range = {10, 1200},
+    Increment = 5,
+    Suffix = "Seconds",
+    CurrentValue = 10,
+    Flag = "AutoMoney",
+    Callback = function(Value)
+        MoneyInterval = Value
+    end
+})
+
+function doMoney()
+    spawn(function()
+        while autoMoney == true do
+            game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Tycoons"):WaitForChild(
+                "CollectMoney"):InvokeServer()
+            wait(MoneyInterval)
+        end
+    end)
+end
+
+-- toggle collect Reward
+getgenv().autoReward = false
+
+local Toggle = MainTab:CreateToggle({
+    Name = "Toggle Auto Reward",
+    CurrentValue = false,
+    Flag = "AutoReward",
+    Callback = function(Value)
+        getgenv().autoReward = Value
+        if Value then
+            doReward()
+        end
+    end
+})
+
+function doReward()
+    spawn(function()
+        while autoReward == true do
+            game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Timers"):WaitForChild(
+                "GetEventReward"):InvokeServer()
+            wait(5)
+        end
+    end)
+end
+-- toggle auto gems
+getgenv().autoGems = false
+
+local Toggle = MainTab:CreateToggle({
+    Name = "Toggle Auto buy Gems",
+    CurrentValue = false,
+    Flag = "AutoGems",
+    Callback = function(Value)
+        getgenv().autoGems = Value
+        if Value then
+            doGems()
+        end
+    end
+})
+
+function doGems()
+    spawn(function()
+        while autoGems == true do
+            local args = {
+                [1] = "Item4"
+            }
+
+            game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Shop"):WaitForChild(
+                "PurchaseEventItem"):InvokeServer(unpack(args))
+
+            wait(60)
+        end
+    end)
+end
+
 local Section = MainTab:CreateSection("Auto Buy")
 
 -- Auto Buy Weights
@@ -138,88 +230,10 @@ function doAutoBuyDna()
         local startAmount = 1
         local endAmount = 80
         while autoBuyDna == true do
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(1, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(2, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(3, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(4, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(5, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(6, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(7, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(8, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(9, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(10, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(11, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(12, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(13, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(14, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(15, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(16, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(17, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(18, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(19, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(20, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(21, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(22, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(23, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(24, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(25, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(26, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(27, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(28, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(29, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(30, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(31, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(32, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(33, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(34, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(35, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(36, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(37, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(38, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(39, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(40, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(41, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(42, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(43, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(44, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(45, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(46, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(47, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(48, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(49, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(50, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(51, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(52, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(53, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(54, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(55, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(56, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(57, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(58, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(59, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(60, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(61, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(62, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(63, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(64, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(65, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(66, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(67, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(68, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(69, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(70, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(71, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(72, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(73, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(74, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(75, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(76, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(77, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(78, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(79, "DNA", "Islands")
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(80, "DNA", "Islands")
-
-            wait(buyDnaInterval)
+            for i = startAmount, endAmount do
+                game:GetService("ReplicatedStorage").Remotes.Shop.RequestPurchase:InvokeServer(i, "DNA", "Islands")
+                wait(buyDnaInterval)
+            end
         end
     end)
 end
@@ -335,7 +349,7 @@ local Toggle = MiscTab:CreateToggle({
     Callback = function(Value)
         getgenv().doAutoAfk = Value
         if Value then
-            doAFK()
+            doAfk()
         end
     end
 })
@@ -344,10 +358,10 @@ function doAFK()
     spawn(function()
         while doAutoAfk == true do
             wait(0.5)
-            local bb = game:service "VirtualUser"
-            game:service "Players".LocalPlayer.Idled:connect(function()
-                bb:CaptureController()
-                bb:ClickButton2(Vector2.new())
+            Players.LocalPlayer.Idled:Connect(function()
+                local VirtualUser = game:GetService("VirtualUser")
+                VirtualUser:CaptureController()
+                VirtualUser:ClickButton2(Vector2.new())
                 wait(2)
             end)
             wait(2)
@@ -355,101 +369,3 @@ function doAFK()
     end)
 end
 
--- Destroy UI
-local Section = MiscTab:CreateSection("Destroy UI")
-
-local Button = MiscTab:CreateButton({
-    Name = "Destroy UI",
-    Callback = function()
-        Rayfield:Destroy()
-    end
-})
-
--- Supermarket
-
-local SupermarketTab = Window:CreateTab("Supermarket")
-local Section = SupermarketTab:CreateSection("Auto Buy")
-
--- Auto Buy SM
-
-getgenv().autoBuySM = false
-local buyIntervalSM
-
-local Slider = SupermarketTab:CreateSlider({
-    Name = "Auto Buy Weights Interval",
-    Range = {1, 60},
-    Increment = 1,
-    Suffix = "Seconds",
-    CurrentValue = 10,
-    Flag = "AutoBuyWeightsSM",
-    Callback = function(Value)
-        buyIntervalSM = Value
-    end
-})
-
-local Toggle = SupermarketTab:CreateToggle({
-    Name = "Toggle Auto Buy Weights",
-    CurrentValue = false,
-    Flag = "AutoBuySM",
-    Callback = function(Value)
-        getgenv().autoBuySM = Value
-        if Value then
-            doAutoBuySM()
-        end
-    end
-})
-
-function doAutoBuySM()
-    spawn(function()
-        while autoBuySM == true do
-            local args = {
-                [1] = "Weight",
-                [2] = "Supermarket"
-            }
-            game:GetService("ReplicatedStorage").Remotes.Shop.RequestBuyAll:InvokeServer(unpack(args))
-            wait(buyIntervalSM)
-        end
-    end)
-end
-
-local Section = SupermarketTab:CreateSection("Auto Sell")
-
--- Auto Sell SM
-
-getgenv().autoSellSM = false
-local SellIntervalSM
-
-local Slider = SupermarketTab:CreateSlider({
-    Name = "Auto Sell Interval",
-    Range = {1, 60},
-    Increment = 1,
-    Suffix = "Seconds",
-    CurrentValue = 10,
-    Flag = "AutoSellSM",
-    Callback = function(Value)
-        SellIntervalSM = Value
-    end
-})
-
-local Toggle = SupermarketTab:CreateToggle({
-    Name = "Toggle Auto Sell ",
-    CurrentValue = false,
-    Flag = "AutoSellToggleSM",
-    Callback = function(Value)
-        getgenv().autoSellSM = Value
-        if Value then
-            doAutoSellSM()
-        end
-    end
-})
-
-function doAutoSellSM()
-    spawn(function()
-        while autoSellSM == true do
-            teleportTO(game:GetService("Workspace").Dimensions.Supermarket.Shops.Server.SupermarketSell.CFrame)
-            wait(SellIntervalSM)
-            teleportTO(game:GetService("Workspace").Dimensions.Supermarket.Spawns.SpawnLocation.CFrame)
-            wait(SellIntervalSM)
-        end
-    end)
-end
